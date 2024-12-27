@@ -28,7 +28,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log(state);
   switch (action.type) {
     case "dataReceived":
       return { ...state, questions: action.payload, status: "ready" };
@@ -89,11 +88,13 @@ export default function App() {
   const numQuestions = questions.length;
   const maxPoints = questions.reduce((prev, cur) => prev + cur.points, 0);
 
-  useEffect(function () {
-    fetch("http://localhost:9000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
+  useEffect(() => {
+    fetch("/questions.json")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: "dataReceived", payload: data.questions });
+      })
+      .catch(() => dispatch({ type: "dataFailed" }));
   }, []);
 
   return (
