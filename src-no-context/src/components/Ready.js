@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { useQuiz } from "../contexts/QuizContext";
-
-function Ready() {
-  const { numQuestions, dispatch } = useQuiz();
+function Ready({ numQuestions, dispatch }) {
   return (
     <div className="start">
       <h2>Welcome to the React Quiz!</h2>
